@@ -1,0 +1,135 @@
+springboot:
+  version: 3.1.5
+
+jpa:
+  generateStrategy: SEQUENCE
+
+properties:
+  type: properties
+  loadData: false
+
+config:
+  security: true
+  dataLoader: true
+  console: true
+  test: false
+  buildTool: maven
+
+project:
+  name: blogs-system
+  domain: org
+  groupID: bshg
+  usedJava: jakarta
+  port: 8036
+
+db:
+  type: mysql
+  host: localhost
+  port: 3306
+  name: blogsSystem
+
+roles:
+  - ADMIN
+  - COSTUMER
+
+packages:
+  - entities:
+      - name: Admin#user
+        table: admins
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - firstname
+          - lastname
+          - phoneNumber
+          - likeDislikes|list-LikeDislike
+          - notifications|list-Notification
+          - profile|UserProfile
+          - posts|list-Post
+          - comments|list-Comment
+
+      - name: Costumer#user
+        table: admins
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - firstname
+          - lastname
+          - phoneNumber
+          - profile|UserProfile
+          - likeDislikes|list-LikeDislike
+          - notifications|list-Notification
+          - posts|list-Post
+          - comments|list-Comment
+
+      - name: Post
+        table: posts
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - title
+          - content
+          - createdDate|datetime
+          - lastModifiedDate|datetime
+          - tags|list-Tag
+          - comments|list-Comment
+          - likesDislikes|list-LikeDislike
+
+      - name: Comment
+        table: comments
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - text
+          - createdDate|datetime
+          - likesDislikes|list-LikeDislike
+
+      - name: Tag
+        table: tags
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - name
+
+      - name: Category
+        table: categories
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - name
+          - posts|list-Post
+
+      - name: ImageFile
+        table: image_files
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - filename
+          - contentType
+          - link
+
+      - name: LikeDislike
+        table: likes_dislikes
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - type|enum-LikeDislikeType
+
+      - name: Notification
+        table: notifications
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - message
+          - createdDate|datetime
+
+      - name: UserProfile
+        table: user_profiles
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - bio
+          - profilePicture
+
+      - name: Page
+        table: pages
+        authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
+        fields:
+          - title
+          - content
+
+enums:
+  - name: LikeDislikeType
+    constants:
+      - LIKE
+      - DISLIKE
