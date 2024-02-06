@@ -12,13 +12,13 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractCreateProcessImpl;
 
 public class CreateAdminProcessImpl extends AbstractCreateProcessImpl<Admin, AdminService> implements CreateAdminProcess {
-    public CreateAdminProcessImpl(AdminService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
+    public CreateAdminProcessImpl(AdminService service, PostService postService, LikeDislikeService likeDislikeService, NotificationService notificationService, UserProfileService userProfileService, CommentService commentService) {
         super(service);
-        this.userProfileService = userProfileService;
-        this.notificationService = notificationService;
-        this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
         this.postService = postService;
+        this.likeDislikeService = likeDislikeService;
+        this.notificationService = notificationService;
+        this.userProfileService = userProfileService;
+        this.commentService = commentService;
     }
 
     @Override
@@ -42,25 +42,11 @@ public class CreateAdminProcessImpl extends AbstractCreateProcessImpl<Admin, Adm
         configure(Admin.class);
     }
 
-    private final UserProfileService userProfileService;
-    private CreateUserProfileProcess createUserProfileProcess;
+    private final PostService postService;
+    private CreatePostProcess createPostProcess;
 
-    public void setCreateUserProfileProcess(CreateUserProfileProcess value) {
-        this.createUserProfileProcess = value;
-    }
-
-    private final NotificationService notificationService;
-    private CreateNotificationProcess createNotificationProcess;
-
-    public void setCreateNotificationProcess(CreateNotificationProcess value) {
-        this.createNotificationProcess = value;
-    }
-
-    private final CommentService commentService;
-    private CreateCommentProcess createCommentProcess;
-
-    public void setCreateCommentProcess(CreateCommentProcess value) {
-        this.createCommentProcess = value;
+    public void setCreatePostProcess(CreatePostProcess value) {
+        this.createPostProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -70,10 +56,24 @@ public class CreateAdminProcessImpl extends AbstractCreateProcessImpl<Admin, Adm
         this.createLikeDislikeProcess = value;
     }
 
-    private final PostService postService;
-    private CreatePostProcess createPostProcess;
+    private final NotificationService notificationService;
+    private CreateNotificationProcess createNotificationProcess;
 
-    public void setCreatePostProcess(CreatePostProcess value) {
-        this.createPostProcess = value;
+    public void setCreateNotificationProcess(CreateNotificationProcess value) {
+        this.createNotificationProcess = value;
+    }
+
+    private final UserProfileService userProfileService;
+    private CreateUserProfileProcess createUserProfileProcess;
+
+    public void setCreateUserProfileProcess(CreateUserProfileProcess value) {
+        this.createUserProfileProcess = value;
+    }
+
+    private final CommentService commentService;
+    private CreateCommentProcess createCommentProcess;
+
+    public void setCreateCommentProcess(CreateCommentProcess value) {
+        this.createCommentProcess = value;
     }
 }

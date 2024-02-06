@@ -25,7 +25,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class DataInitLoader implements ApplicationRunner {
@@ -89,10 +88,6 @@ public class DataInitLoader implements ApplicationRunner {
             ent.setFirstname("firstname " + i);
             ent.setLastname("lastname " + i);
             ent.setPhoneNumber("phoneNumber " + i);
-            ent.setUsername("client");
-            ent.setPassword(userService.cryptPassword("client123"));
-            List<Role> savedRoles = roleService.save(List.of(RoleEnum.CLIENT.getRole()));
-            ent.setRoles(savedRoles);
             createAdminProcess.run(ent);
         }
         Console.log("Data For Admin Generated!");
@@ -104,10 +99,6 @@ public class DataInitLoader implements ApplicationRunner {
             ent.setFirstname("firstname " + i);
             ent.setLastname("lastname " + i);
             ent.setPhoneNumber("phoneNumber " + i);
-            ent.setUsername("client");
-            ent.setPassword(userService.cryptPassword("client123"));
-            List<Role> savedRoles = roleService.save(List.of(RoleEnum.CLIENT.getRole()));
-            ent.setRoles(savedRoles);
             createCostumerProcess.run(ent);
         }
         Console.log("Data For Costumer Generated!");

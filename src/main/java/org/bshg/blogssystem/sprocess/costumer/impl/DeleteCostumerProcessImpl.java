@@ -12,13 +12,13 @@ import org.bshg.blogssystem.sprocess.userprofile.facade.DeleteUserProfileProcess
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractDeleteProcessImpl;
 
 public class DeleteCostumerProcessImpl extends AbstractDeleteProcessImpl<Costumer, CostumerService> implements DeleteCostumerProcess {
-    public DeleteCostumerProcessImpl(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
+    public DeleteCostumerProcessImpl(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
         super(service);
+        this.postService = postService;
+        this.likeDislikeService = likeDislikeService;
         this.userProfileService = userProfileService;
         this.notificationService = notificationService;
         this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
-        this.postService = postService;
     }
 
     @Override
@@ -29,18 +29,38 @@ public class DeleteCostumerProcessImpl extends AbstractDeleteProcessImpl<Costume
 
     public void deleteByProfile(UserProfile profile) {
         if (profile != null && profile.getId() != null) {
+            Costumer found = this.service.findByProfileId(profile.getId());
+            if (found == null) return;
+            this.deleteAssociatedList(found);
             service.deleteByProfileId(profile.getId());
         }
     }
 
     @Override
     public void deleteAssociatedList(Costumer item) {
-        DeleteUserProfileProcess.deleteByProfile(item);
+        deleteLikeDislikeProcess.deleteByCostumer(item);
+        deleteNotificationProcess.deleteByCostumer(item);
+        deletePostProcess.deleteByCostumer(item);
+        deleteCommentProcess.deleteByCostumer(item);
     }
 
     @Override
     public void configure() {
         configure(Costumer.class);
+    }
+
+    private final PostService postService;
+    private DeletePostProcess deletePostProcess;
+
+    public void setDeletePostProcess(DeletePostProcess value) {
+        this.deletePostProcess = value;
+    }
+
+    private final LikeDislikeService likeDislikeService;
+    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
+
+    public void setDeleteLikeDislikeProcess(DeleteLikeDislikeProcess value) {
+        this.deleteLikeDislikeProcess = value;
     }
 
     private final UserProfileService userProfileService;
@@ -62,19 +82,5 @@ public class DeleteCostumerProcessImpl extends AbstractDeleteProcessImpl<Costume
 
     public void setDeleteCommentProcess(DeleteCommentProcess value) {
         this.deleteCommentProcess = value;
-    }
-
-    private final LikeDislikeService likeDislikeService;
-    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
-
-    public void setDeleteLikeDislikeProcess(DeleteLikeDislikeProcess value) {
-        this.deleteLikeDislikeProcess = value;
-    }
-
-    private final PostService postService;
-    private DeletePostProcess deletePostProcess;
-
-    public void setDeletePostProcess(DeletePostProcess value) {
-        this.deletePostProcess = value;
     }
 }

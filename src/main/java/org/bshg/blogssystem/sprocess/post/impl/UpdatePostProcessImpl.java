@@ -22,14 +22,14 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractUpdateProcessImpl;
 
 public class UpdatePostProcessImpl extends AbstractUpdateProcessImpl<Post, PostService> implements UpdatePostProcess {
-    public UpdatePostProcessImpl(PostService service, CategoryService categoryService, AdminService adminService, CommentService commentService, LikeDislikeService likeDislikeService, TagService tagService, CostumerService costumerService) {
+    public UpdatePostProcessImpl(PostService service, TagService tagService, LikeDislikeService likeDislikeService, CategoryService categoryService, CostumerService costumerService, CommentService commentService, AdminService adminService) {
         super(service);
-        this.categoryService = categoryService;
-        this.adminService = adminService;
-        this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
         this.tagService = tagService;
+        this.likeDislikeService = likeDislikeService;
+        this.categoryService = categoryService;
         this.costumerService = costumerService;
+        this.commentService = commentService;
+        this.adminService = adminService;
     }
 
     public Post run(Post item) {
@@ -74,40 +74,16 @@ public class UpdatePostProcessImpl extends AbstractUpdateProcessImpl<Post, PostS
         this.configure(Post.class);
     }
 
-    private final CategoryService categoryService;
-    private UpdateCategoryProcess updateCategoryProcess;
-    private DeleteCategoryProcess deleteCategoryProcess;
+    private final TagService tagService;
+    private UpdateTagProcess updateTagProcess;
+    private DeleteTagProcess deleteTagProcess;
 
-    public void setUpdateCategoryProcess(UpdateCategoryProcess value) {
-        this.updateCategoryProcess = value;
+    public void setUpdateTagProcess(UpdateTagProcess value) {
+        this.updateTagProcess = value;
     }
 
-    public void setDeleteCategoryProcess(DeleteCategoryProcess value) {
-        this.deleteCategoryProcess = value;
-    }
-
-    private final AdminService adminService;
-    private UpdateAdminProcess updateAdminProcess;
-    private DeleteAdminProcess deleteAdminProcess;
-
-    public void setUpdateAdminProcess(UpdateAdminProcess value) {
-        this.updateAdminProcess = value;
-    }
-
-    public void setDeleteAdminProcess(DeleteAdminProcess value) {
-        this.deleteAdminProcess = value;
-    }
-
-    private final CommentService commentService;
-    private UpdateCommentProcess updateCommentProcess;
-    private DeleteCommentProcess deleteCommentProcess;
-
-    public void setUpdateCommentProcess(UpdateCommentProcess value) {
-        this.updateCommentProcess = value;
-    }
-
-    public void setDeleteCommentProcess(DeleteCommentProcess value) {
-        this.deleteCommentProcess = value;
+    public void setDeleteTagProcess(DeleteTagProcess value) {
+        this.deleteTagProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -122,16 +98,16 @@ public class UpdatePostProcessImpl extends AbstractUpdateProcessImpl<Post, PostS
         this.deleteLikeDislikeProcess = value;
     }
 
-    private final TagService tagService;
-    private UpdateTagProcess updateTagProcess;
-    private DeleteTagProcess deleteTagProcess;
+    private final CategoryService categoryService;
+    private UpdateCategoryProcess updateCategoryProcess;
+    private DeleteCategoryProcess deleteCategoryProcess;
 
-    public void setUpdateTagProcess(UpdateTagProcess value) {
-        this.updateTagProcess = value;
+    public void setUpdateCategoryProcess(UpdateCategoryProcess value) {
+        this.updateCategoryProcess = value;
     }
 
-    public void setDeleteTagProcess(DeleteTagProcess value) {
-        this.deleteTagProcess = value;
+    public void setDeleteCategoryProcess(DeleteCategoryProcess value) {
+        this.deleteCategoryProcess = value;
     }
 
     private final CostumerService costumerService;
@@ -144,5 +120,29 @@ public class UpdatePostProcessImpl extends AbstractUpdateProcessImpl<Post, PostS
 
     public void setDeleteCostumerProcess(DeleteCostumerProcess value) {
         this.deleteCostumerProcess = value;
+    }
+
+    private final CommentService commentService;
+    private UpdateCommentProcess updateCommentProcess;
+    private DeleteCommentProcess deleteCommentProcess;
+
+    public void setUpdateCommentProcess(UpdateCommentProcess value) {
+        this.updateCommentProcess = value;
+    }
+
+    public void setDeleteCommentProcess(DeleteCommentProcess value) {
+        this.deleteCommentProcess = value;
+    }
+
+    private final AdminService adminService;
+    private UpdateAdminProcess updateAdminProcess;
+    private DeleteAdminProcess deleteAdminProcess;
+
+    public void setUpdateAdminProcess(UpdateAdminProcess value) {
+        this.updateAdminProcess = value;
+    }
+
+    public void setDeleteAdminProcess(DeleteAdminProcess value) {
+        this.deleteAdminProcess = value;
     }
 }

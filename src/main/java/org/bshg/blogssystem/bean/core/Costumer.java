@@ -9,7 +9,7 @@ import org.bshg.blogssystem.zsecurity.bean.User;
 import java.util.List;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "costumers")
 public class Costumer extends User {
     private String firstname;
     private String lastname;

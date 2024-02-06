@@ -12,15 +12,15 @@ public class CostumerConverter extends AbstractConverter<Costumer, CostumerDto> 
     @Autowired
     private UserConverter userConverter;
     @Autowired
+    private PostConverter postConverter;
+    @Autowired
+    private LikeDislikeConverter likeDislikeConverter;
+    @Autowired
     private UserProfileConverter userProfileConverter;
     @Autowired
     private NotificationConverter notificationConverter;
     @Autowired
     private CommentConverter commentConverter;
-    @Autowired
-    private LikeDislikeConverter likeDislikeConverter;
-    @Autowired
-    private PostConverter postConverter;
     private boolean profile = true;
     private boolean likeDislikes = true;
     private boolean notifications = true;
@@ -34,10 +34,10 @@ public class CostumerConverter extends AbstractConverter<Costumer, CostumerDto> 
 
     @Override
     protected void convertersConfig(boolean value) {
+        this.postConverter.setCostumer(value);
+        this.likeDislikeConverter.setCostumer(value);
         this.notificationConverter.setCostumer(value);
         this.commentConverter.setCostumer(value);
-        this.likeDislikeConverter.setCostumer(value);
-        this.postConverter.setCostumer(value);
     }
 
     @Override
@@ -90,6 +90,22 @@ public class CostumerConverter extends AbstractConverter<Costumer, CostumerDto> 
         this.comments = value;
     }
 
+    public void setPostConverter(PostConverter value) {
+        this.postConverter = value;
+    }
+
+    public PostConverter getPostConverter() {
+        return postConverter;
+    }
+
+    public void setLikeDislikeConverter(LikeDislikeConverter value) {
+        this.likeDislikeConverter = value;
+    }
+
+    public LikeDislikeConverter getLikeDislikeConverter() {
+        return likeDislikeConverter;
+    }
+
     public void setUserProfileConverter(UserProfileConverter value) {
         this.userProfileConverter = value;
     }
@@ -112,21 +128,5 @@ public class CostumerConverter extends AbstractConverter<Costumer, CostumerDto> 
 
     public CommentConverter getCommentConverter() {
         return commentConverter;
-    }
-
-    public void setLikeDislikeConverter(LikeDislikeConverter value) {
-        this.likeDislikeConverter = value;
-    }
-
-    public LikeDislikeConverter getLikeDislikeConverter() {
-        return likeDislikeConverter;
-    }
-
-    public void setPostConverter(PostConverter value) {
-        this.postConverter = value;
-    }
-
-    public PostConverter getPostConverter() {
-        return postConverter;
     }
 }

@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class LikeDislikeConverter extends AbstractConverter<LikeDislike, LikeDislikeDto> {
     @Autowired
-    private AdminConverter adminConverter;
-    @Autowired
-    private CommentConverter commentConverter;
+    private PostConverter postConverter;
     @Autowired
     private CostumerConverter costumerConverter;
     @Autowired
-    private PostConverter postConverter;
+    private CommentConverter commentConverter;
+    @Autowired
+    private AdminConverter adminConverter;
     private boolean admin = true;
     private boolean costumer = true;
     private boolean post = true;
@@ -28,10 +28,10 @@ public class LikeDislikeConverter extends AbstractConverter<LikeDislike, LikeDis
 
     @Override
     protected void convertersConfig(boolean value) {
-        this.adminConverter.setLikeDislikes(value);
-        this.commentConverter.setLikesDislikes(value);
-        this.costumerConverter.setLikeDislikes(value);
         this.postConverter.setLikesDislikes(value);
+        this.costumerConverter.setLikeDislikes(value);
+        this.commentConverter.setLikesDislikes(value);
+        this.adminConverter.setLikeDislikes(value);
     }
 
     @Override
@@ -74,20 +74,12 @@ public class LikeDislikeConverter extends AbstractConverter<LikeDislike, LikeDis
         this.comment = value;
     }
 
-    public void setAdminConverter(AdminConverter value) {
-        this.adminConverter = value;
+    public void setPostConverter(PostConverter value) {
+        this.postConverter = value;
     }
 
-    public AdminConverter getAdminConverter() {
-        return adminConverter;
-    }
-
-    public void setCommentConverter(CommentConverter value) {
-        this.commentConverter = value;
-    }
-
-    public CommentConverter getCommentConverter() {
-        return commentConverter;
+    public PostConverter getPostConverter() {
+        return postConverter;
     }
 
     public void setCostumerConverter(CostumerConverter value) {
@@ -98,11 +90,19 @@ public class LikeDislikeConverter extends AbstractConverter<LikeDislike, LikeDis
         return costumerConverter;
     }
 
-    public void setPostConverter(PostConverter value) {
-        this.postConverter = value;
+    public void setCommentConverter(CommentConverter value) {
+        this.commentConverter = value;
     }
 
-    public PostConverter getPostConverter() {
-        return postConverter;
+    public CommentConverter getCommentConverter() {
+        return commentConverter;
+    }
+
+    public void setAdminConverter(AdminConverter value) {
+        this.adminConverter = value;
+    }
+
+    public AdminConverter getAdminConverter() {
+        return adminConverter;
     }
 }

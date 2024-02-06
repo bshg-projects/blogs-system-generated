@@ -16,12 +16,12 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractUpdateProcessImpl;
 
 public class UpdateCommentProcessImpl extends AbstractUpdateProcessImpl<Comment, CommentService> implements UpdateCommentProcess {
-    public UpdateCommentProcessImpl(CommentService service, AdminService adminService, LikeDislikeService likeDislikeService, CostumerService costumerService, PostService postService) {
+    public UpdateCommentProcessImpl(CommentService service, PostService postService, LikeDislikeService likeDislikeService, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
+        this.postService = postService;
         this.likeDislikeService = likeDislikeService;
         this.costumerService = costumerService;
-        this.postService = postService;
+        this.adminService = adminService;
     }
 
     public Comment run(Comment item) {
@@ -50,16 +50,16 @@ public class UpdateCommentProcessImpl extends AbstractUpdateProcessImpl<Comment,
         this.configure(Comment.class);
     }
 
-    private final AdminService adminService;
-    private UpdateAdminProcess updateAdminProcess;
-    private DeleteAdminProcess deleteAdminProcess;
+    private final PostService postService;
+    private UpdatePostProcess updatePostProcess;
+    private DeletePostProcess deletePostProcess;
 
-    public void setUpdateAdminProcess(UpdateAdminProcess value) {
-        this.updateAdminProcess = value;
+    public void setUpdatePostProcess(UpdatePostProcess value) {
+        this.updatePostProcess = value;
     }
 
-    public void setDeleteAdminProcess(DeleteAdminProcess value) {
-        this.deleteAdminProcess = value;
+    public void setDeletePostProcess(DeletePostProcess value) {
+        this.deletePostProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -86,15 +86,15 @@ public class UpdateCommentProcessImpl extends AbstractUpdateProcessImpl<Comment,
         this.deleteCostumerProcess = value;
     }
 
-    private final PostService postService;
-    private UpdatePostProcess updatePostProcess;
-    private DeletePostProcess deletePostProcess;
+    private final AdminService adminService;
+    private UpdateAdminProcess updateAdminProcess;
+    private DeleteAdminProcess deleteAdminProcess;
 
-    public void setUpdatePostProcess(UpdatePostProcess value) {
-        this.updatePostProcess = value;
+    public void setUpdateAdminProcess(UpdateAdminProcess value) {
+        this.updateAdminProcess = value;
     }
 
-    public void setDeletePostProcess(DeletePostProcess value) {
-        this.deletePostProcess = value;
+    public void setDeleteAdminProcess(DeleteAdminProcess value) {
+        this.deleteAdminProcess = value;
     }
 }

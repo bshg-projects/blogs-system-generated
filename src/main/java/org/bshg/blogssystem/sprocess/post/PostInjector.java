@@ -36,83 +36,47 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class PostInjector {
     @Bean
-    public CreatePostProcess createPostProcess(PostService service, CategoryService categoryService, AdminService adminService, CommentService commentService, LikeDislikeService likeDislikeService, TagService tagService, CostumerService costumerService) {
-        var bean = new CreatePostProcessImpl(service, categoryService, adminService, commentService, likeDislikeService, tagService, costumerService);
-        bean.setCreateCategoryProcess(this.createCategoryProcess);
-        bean.setCreateAdminProcess(this.createAdminProcess);
-        bean.setCreateCommentProcess(this.createCommentProcess);
-        bean.setCreateLikeDislikeProcess(this.createLikeDislikeProcess);
+    public CreatePostProcess createPostProcess(PostService service, TagService tagService, LikeDislikeService likeDislikeService, CategoryService categoryService, CostumerService costumerService, CommentService commentService, AdminService adminService) {
+        var bean = new CreatePostProcessImpl(service, tagService, likeDislikeService, categoryService, costumerService, commentService, adminService);
         bean.setCreateTagProcess(this.createTagProcess);
+        bean.setCreateLikeDislikeProcess(this.createLikeDislikeProcess);
+        bean.setCreateCategoryProcess(this.createCategoryProcess);
         bean.setCreateCostumerProcess(this.createCostumerProcess);
+        bean.setCreateCommentProcess(this.createCommentProcess);
+        bean.setCreateAdminProcess(this.createAdminProcess);
         return bean;
     }
 
     @Bean
-    public UpdatePostProcess updatePostProcess(PostService service, CategoryService categoryService, AdminService adminService, CommentService commentService, LikeDislikeService likeDislikeService, TagService tagService, CostumerService costumerService) {
-        var bean = new UpdatePostProcessImpl(service, categoryService, adminService, commentService, likeDislikeService, tagService, costumerService);
-        bean.setUpdateCategoryProcess(this.updateCategoryProcess);
-        bean.setDeleteCategoryProcess(this.deleteCategoryProcess);
-        bean.setUpdateAdminProcess(this.updateAdminProcess);
-        bean.setDeleteAdminProcess(this.deleteAdminProcess);
-        bean.setUpdateCommentProcess(this.updateCommentProcess);
-        bean.setDeleteCommentProcess(this.deleteCommentProcess);
-        bean.setUpdateLikeDislikeProcess(this.updateLikeDislikeProcess);
-        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
+    public UpdatePostProcess updatePostProcess(PostService service, TagService tagService, LikeDislikeService likeDislikeService, CategoryService categoryService, CostumerService costumerService, CommentService commentService, AdminService adminService) {
+        var bean = new UpdatePostProcessImpl(service, tagService, likeDislikeService, categoryService, costumerService, commentService, adminService);
         bean.setUpdateTagProcess(this.updateTagProcess);
         bean.setDeleteTagProcess(this.deleteTagProcess);
+        bean.setUpdateLikeDislikeProcess(this.updateLikeDislikeProcess);
+        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
+        bean.setUpdateCategoryProcess(this.updateCategoryProcess);
+        bean.setDeleteCategoryProcess(this.deleteCategoryProcess);
         bean.setUpdateCostumerProcess(this.updateCostumerProcess);
         bean.setDeleteCostumerProcess(this.deleteCostumerProcess);
+        bean.setUpdateCommentProcess(this.updateCommentProcess);
+        bean.setDeleteCommentProcess(this.deleteCommentProcess);
+        bean.setUpdateAdminProcess(this.updateAdminProcess);
+        bean.setDeleteAdminProcess(this.deleteAdminProcess);
         return bean;
     }
 
     @Bean
-    public DeletePostProcess deletePostProcess(PostService service, CategoryService categoryService, AdminService adminService, CommentService commentService, LikeDislikeService likeDislikeService, TagService tagService, CostumerService costumerService) {
-        var bean = new DeletePostProcessImpl(service, categoryService, adminService, commentService, likeDislikeService, tagService, costumerService);
-        bean.setDeleteCategoryProcess(this.deleteCategoryProcess);
-        bean.setDeleteAdminProcess(this.deleteAdminProcess);
-        bean.setDeleteCommentProcess(this.deleteCommentProcess);
-        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
+    public DeletePostProcess deletePostProcess(PostService service, TagService tagService, LikeDislikeService likeDislikeService, CategoryService categoryService, CostumerService costumerService, CommentService commentService, AdminService adminService) {
+        var bean = new DeletePostProcessImpl(service, tagService, likeDislikeService, categoryService, costumerService, commentService, adminService);
         bean.setDeleteTagProcess(this.deleteTagProcess);
+        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
+        bean.setDeleteCategoryProcess(this.deleteCategoryProcess);
         bean.setDeleteCostumerProcess(this.deleteCostumerProcess);
+        bean.setDeleteCommentProcess(this.deleteCommentProcess);
+        bean.setDeleteAdminProcess(this.deleteAdminProcess);
         return bean;
     }
 
-    @Autowired
-    @Lazy
-    private CreateCategoryProcess createCategoryProcess;
-    @Autowired
-    @Lazy
-    private UpdateCategoryProcess updateCategoryProcess;
-    @Autowired
-    @Lazy
-    private DeleteCategoryProcess deleteCategoryProcess;
-    @Autowired
-    @Lazy
-    private CreateAdminProcess createAdminProcess;
-    @Autowired
-    @Lazy
-    private UpdateAdminProcess updateAdminProcess;
-    @Autowired
-    @Lazy
-    private DeleteAdminProcess deleteAdminProcess;
-    @Autowired
-    @Lazy
-    private CreateCommentProcess createCommentProcess;
-    @Autowired
-    @Lazy
-    private UpdateCommentProcess updateCommentProcess;
-    @Autowired
-    @Lazy
-    private DeleteCommentProcess deleteCommentProcess;
-    @Autowired
-    @Lazy
-    private CreateLikeDislikeProcess createLikeDislikeProcess;
-    @Autowired
-    @Lazy
-    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
-    @Autowired
-    @Lazy
-    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
     @Autowired
     @Lazy
     private CreateTagProcess createTagProcess;
@@ -124,6 +88,24 @@ public class PostInjector {
     private DeleteTagProcess deleteTagProcess;
     @Autowired
     @Lazy
+    private CreateLikeDislikeProcess createLikeDislikeProcess;
+    @Autowired
+    @Lazy
+    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
+    @Autowired
+    @Lazy
+    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
+    @Autowired
+    @Lazy
+    private CreateCategoryProcess createCategoryProcess;
+    @Autowired
+    @Lazy
+    private UpdateCategoryProcess updateCategoryProcess;
+    @Autowired
+    @Lazy
+    private DeleteCategoryProcess deleteCategoryProcess;
+    @Autowired
+    @Lazy
     private CreateCostumerProcess createCostumerProcess;
     @Autowired
     @Lazy
@@ -131,4 +113,22 @@ public class PostInjector {
     @Autowired
     @Lazy
     private DeleteCostumerProcess deleteCostumerProcess;
+    @Autowired
+    @Lazy
+    private CreateCommentProcess createCommentProcess;
+    @Autowired
+    @Lazy
+    private UpdateCommentProcess updateCommentProcess;
+    @Autowired
+    @Lazy
+    private DeleteCommentProcess deleteCommentProcess;
+    @Autowired
+    @Lazy
+    private CreateAdminProcess createAdminProcess;
+    @Autowired
+    @Lazy
+    private UpdateAdminProcess updateAdminProcess;
+    @Autowired
+    @Lazy
+    private DeleteAdminProcess deleteAdminProcess;
 }

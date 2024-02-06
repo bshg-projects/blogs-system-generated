@@ -12,12 +12,12 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractCreateProcessImpl;
 
 public class CreateCommentProcessImpl extends AbstractCreateProcessImpl<Comment, CommentService> implements CreateCommentProcess {
-    public CreateCommentProcessImpl(CommentService service, AdminService adminService, LikeDislikeService likeDislikeService, CostumerService costumerService, PostService postService) {
+    public CreateCommentProcessImpl(CommentService service, PostService postService, LikeDislikeService likeDislikeService, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
+        this.postService = postService;
         this.likeDislikeService = likeDislikeService;
         this.costumerService = costumerService;
-        this.postService = postService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -38,11 +38,11 @@ public class CreateCommentProcessImpl extends AbstractCreateProcessImpl<Comment,
         configure(Comment.class);
     }
 
-    private final AdminService adminService;
-    private CreateAdminProcess createAdminProcess;
+    private final PostService postService;
+    private CreatePostProcess createPostProcess;
 
-    public void setCreateAdminProcess(CreateAdminProcess value) {
-        this.createAdminProcess = value;
+    public void setCreatePostProcess(CreatePostProcess value) {
+        this.createPostProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -59,10 +59,10 @@ public class CreateCommentProcessImpl extends AbstractCreateProcessImpl<Comment,
         this.createCostumerProcess = value;
     }
 
-    private final PostService postService;
-    private CreatePostProcess createPostProcess;
+    private final AdminService adminService;
+    private CreateAdminProcess createAdminProcess;
 
-    public void setCreatePostProcess(CreatePostProcess value) {
-        this.createPostProcess = value;
+    public void setCreateAdminProcess(CreateAdminProcess value) {
+        this.createAdminProcess = value;
     }
 }

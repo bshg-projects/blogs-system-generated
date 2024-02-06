@@ -16,14 +16,14 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractCreateProcessImpl;
 
 public class CreatePostProcessImpl extends AbstractCreateProcessImpl<Post, PostService> implements CreatePostProcess {
-    public CreatePostProcessImpl(PostService service, CategoryService categoryService, AdminService adminService, CommentService commentService, LikeDislikeService likeDislikeService, TagService tagService, CostumerService costumerService) {
+    public CreatePostProcessImpl(PostService service, TagService tagService, LikeDislikeService likeDislikeService, CategoryService categoryService, CostumerService costumerService, CommentService commentService, AdminService adminService) {
         super(service);
-        this.categoryService = categoryService;
-        this.adminService = adminService;
-        this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
         this.tagService = tagService;
+        this.likeDislikeService = likeDislikeService;
+        this.categoryService = categoryService;
         this.costumerService = costumerService;
+        this.commentService = commentService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -46,25 +46,11 @@ public class CreatePostProcessImpl extends AbstractCreateProcessImpl<Post, PostS
         configure(Post.class);
     }
 
-    private final CategoryService categoryService;
-    private CreateCategoryProcess createCategoryProcess;
+    private final TagService tagService;
+    private CreateTagProcess createTagProcess;
 
-    public void setCreateCategoryProcess(CreateCategoryProcess value) {
-        this.createCategoryProcess = value;
-    }
-
-    private final AdminService adminService;
-    private CreateAdminProcess createAdminProcess;
-
-    public void setCreateAdminProcess(CreateAdminProcess value) {
-        this.createAdminProcess = value;
-    }
-
-    private final CommentService commentService;
-    private CreateCommentProcess createCommentProcess;
-
-    public void setCreateCommentProcess(CreateCommentProcess value) {
-        this.createCommentProcess = value;
+    public void setCreateTagProcess(CreateTagProcess value) {
+        this.createTagProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -74,11 +60,11 @@ public class CreatePostProcessImpl extends AbstractCreateProcessImpl<Post, PostS
         this.createLikeDislikeProcess = value;
     }
 
-    private final TagService tagService;
-    private CreateTagProcess createTagProcess;
+    private final CategoryService categoryService;
+    private CreateCategoryProcess createCategoryProcess;
 
-    public void setCreateTagProcess(CreateTagProcess value) {
-        this.createTagProcess = value;
+    public void setCreateCategoryProcess(CreateCategoryProcess value) {
+        this.createCategoryProcess = value;
     }
 
     private final CostumerService costumerService;
@@ -86,5 +72,19 @@ public class CreatePostProcessImpl extends AbstractCreateProcessImpl<Post, PostS
 
     public void setCreateCostumerProcess(CreateCostumerProcess value) {
         this.createCostumerProcess = value;
+    }
+
+    private final CommentService commentService;
+    private CreateCommentProcess createCommentProcess;
+
+    public void setCreateCommentProcess(CreateCommentProcess value) {
+        this.createCommentProcess = value;
+    }
+
+    private final AdminService adminService;
+    private CreateAdminProcess createAdminProcess;
+
+    public void setCreateAdminProcess(CreateAdminProcess value) {
+        this.createAdminProcess = value;
     }
 }

@@ -17,13 +17,13 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractUpdateProcessImpl;
 
 public class UpdateAdminProcessImpl extends AbstractUpdateProcessImpl<Admin, AdminService> implements UpdateAdminProcess {
-    public UpdateAdminProcessImpl(AdminService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
+    public UpdateAdminProcessImpl(AdminService service, PostService postService, LikeDislikeService likeDislikeService, NotificationService notificationService, UserProfileService userProfileService, CommentService commentService) {
         super(service);
-        this.userProfileService = userProfileService;
-        this.notificationService = notificationService;
-        this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
         this.postService = postService;
+        this.likeDislikeService = likeDislikeService;
+        this.notificationService = notificationService;
+        this.userProfileService = userProfileService;
+        this.commentService = commentService;
     }
 
     public Admin run(Admin item) {
@@ -76,40 +76,16 @@ public class UpdateAdminProcessImpl extends AbstractUpdateProcessImpl<Admin, Adm
         this.configure(Admin.class);
     }
 
-    private final UserProfileService userProfileService;
-    private UpdateUserProfileProcess updateUserProfileProcess;
-    private DeleteUserProfileProcess deleteUserProfileProcess;
+    private final PostService postService;
+    private UpdatePostProcess updatePostProcess;
+    private DeletePostProcess deletePostProcess;
 
-    public void setUpdateUserProfileProcess(UpdateUserProfileProcess value) {
-        this.updateUserProfileProcess = value;
+    public void setUpdatePostProcess(UpdatePostProcess value) {
+        this.updatePostProcess = value;
     }
 
-    public void setDeleteUserProfileProcess(DeleteUserProfileProcess value) {
-        this.deleteUserProfileProcess = value;
-    }
-
-    private final NotificationService notificationService;
-    private UpdateNotificationProcess updateNotificationProcess;
-    private DeleteNotificationProcess deleteNotificationProcess;
-
-    public void setUpdateNotificationProcess(UpdateNotificationProcess value) {
-        this.updateNotificationProcess = value;
-    }
-
-    public void setDeleteNotificationProcess(DeleteNotificationProcess value) {
-        this.deleteNotificationProcess = value;
-    }
-
-    private final CommentService commentService;
-    private UpdateCommentProcess updateCommentProcess;
-    private DeleteCommentProcess deleteCommentProcess;
-
-    public void setUpdateCommentProcess(UpdateCommentProcess value) {
-        this.updateCommentProcess = value;
-    }
-
-    public void setDeleteCommentProcess(DeleteCommentProcess value) {
-        this.deleteCommentProcess = value;
+    public void setDeletePostProcess(DeletePostProcess value) {
+        this.deletePostProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -124,15 +100,39 @@ public class UpdateAdminProcessImpl extends AbstractUpdateProcessImpl<Admin, Adm
         this.deleteLikeDislikeProcess = value;
     }
 
-    private final PostService postService;
-    private UpdatePostProcess updatePostProcess;
-    private DeletePostProcess deletePostProcess;
+    private final NotificationService notificationService;
+    private UpdateNotificationProcess updateNotificationProcess;
+    private DeleteNotificationProcess deleteNotificationProcess;
 
-    public void setUpdatePostProcess(UpdatePostProcess value) {
-        this.updatePostProcess = value;
+    public void setUpdateNotificationProcess(UpdateNotificationProcess value) {
+        this.updateNotificationProcess = value;
     }
 
-    public void setDeletePostProcess(DeletePostProcess value) {
-        this.deletePostProcess = value;
+    public void setDeleteNotificationProcess(DeleteNotificationProcess value) {
+        this.deleteNotificationProcess = value;
+    }
+
+    private final UserProfileService userProfileService;
+    private UpdateUserProfileProcess updateUserProfileProcess;
+    private DeleteUserProfileProcess deleteUserProfileProcess;
+
+    public void setUpdateUserProfileProcess(UpdateUserProfileProcess value) {
+        this.updateUserProfileProcess = value;
+    }
+
+    public void setDeleteUserProfileProcess(DeleteUserProfileProcess value) {
+        this.deleteUserProfileProcess = value;
+    }
+
+    private final CommentService commentService;
+    private UpdateCommentProcess updateCommentProcess;
+    private DeleteCommentProcess deleteCommentProcess;
+
+    public void setUpdateCommentProcess(UpdateCommentProcess value) {
+        this.updateCommentProcess = value;
+    }
+
+    public void setDeleteCommentProcess(DeleteCommentProcess value) {
+        this.deleteCommentProcess = value;
     }
 }

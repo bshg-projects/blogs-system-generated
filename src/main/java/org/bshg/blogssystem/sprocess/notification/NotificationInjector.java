@@ -26,40 +26,31 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class NotificationInjector {
     @Bean
-    public CreateNotificationProcess createNotificationProcess(NotificationService service, AdminService adminService, CostumerService costumerService) {
-        var bean = new CreateNotificationProcessImpl(service, adminService, costumerService);
-        bean.setCreateAdminProcess(this.createAdminProcess);
+    public CreateNotificationProcess createNotificationProcess(NotificationService service, CostumerService costumerService, AdminService adminService) {
+        var bean = new CreateNotificationProcessImpl(service, costumerService, adminService);
         bean.setCreateCostumerProcess(this.createCostumerProcess);
+        bean.setCreateAdminProcess(this.createAdminProcess);
         return bean;
     }
 
     @Bean
-    public UpdateNotificationProcess updateNotificationProcess(NotificationService service, AdminService adminService, CostumerService costumerService) {
-        var bean = new UpdateNotificationProcessImpl(service, adminService, costumerService);
-        bean.setUpdateAdminProcess(this.updateAdminProcess);
-        bean.setDeleteAdminProcess(this.deleteAdminProcess);
+    public UpdateNotificationProcess updateNotificationProcess(NotificationService service, CostumerService costumerService, AdminService adminService) {
+        var bean = new UpdateNotificationProcessImpl(service, costumerService, adminService);
         bean.setUpdateCostumerProcess(this.updateCostumerProcess);
         bean.setDeleteCostumerProcess(this.deleteCostumerProcess);
+        bean.setUpdateAdminProcess(this.updateAdminProcess);
+        bean.setDeleteAdminProcess(this.deleteAdminProcess);
         return bean;
     }
 
     @Bean
-    public DeleteNotificationProcess deleteNotificationProcess(NotificationService service, AdminService adminService, CostumerService costumerService) {
-        var bean = new DeleteNotificationProcessImpl(service, adminService, costumerService);
-        bean.setDeleteAdminProcess(this.deleteAdminProcess);
+    public DeleteNotificationProcess deleteNotificationProcess(NotificationService service, CostumerService costumerService, AdminService adminService) {
+        var bean = new DeleteNotificationProcessImpl(service, costumerService, adminService);
         bean.setDeleteCostumerProcess(this.deleteCostumerProcess);
+        bean.setDeleteAdminProcess(this.deleteAdminProcess);
         return bean;
     }
 
-    @Autowired
-    @Lazy
-    private CreateAdminProcess createAdminProcess;
-    @Autowired
-    @Lazy
-    private UpdateAdminProcess updateAdminProcess;
-    @Autowired
-    @Lazy
-    private DeleteAdminProcess deleteAdminProcess;
     @Autowired
     @Lazy
     private CreateCostumerProcess createCostumerProcess;
@@ -69,4 +60,13 @@ public class NotificationInjector {
     @Autowired
     @Lazy
     private DeleteCostumerProcess deleteCostumerProcess;
+    @Autowired
+    @Lazy
+    private CreateAdminProcess createAdminProcess;
+    @Autowired
+    @Lazy
+    private UpdateAdminProcess updateAdminProcess;
+    @Autowired
+    @Lazy
+    private DeleteAdminProcess deleteAdminProcess;
 }

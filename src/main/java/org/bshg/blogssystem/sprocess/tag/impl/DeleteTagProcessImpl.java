@@ -8,6 +8,8 @@ import org.bshg.blogssystem.sprocess.post.facade.DeletePostProcess;
 import org.bshg.blogssystem.sprocess.tag.facade.DeleteTagProcess;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractDeleteProcessImpl;
 
+import java.util.List;
+
 public class DeleteTagProcessImpl extends AbstractDeleteProcessImpl<Tag, TagService> implements DeleteTagProcess {
     public DeleteTagProcessImpl(TagService service, PostService postService) {
         super(service);
@@ -22,6 +24,9 @@ public class DeleteTagProcessImpl extends AbstractDeleteProcessImpl<Tag, TagServ
 
     public void deleteByPost(Post post) {
         if (post != null && post.getId() != null) {
+            List<Tag> found = this.service.findByPostId(post.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByPostId(post.getId());
         }
     }

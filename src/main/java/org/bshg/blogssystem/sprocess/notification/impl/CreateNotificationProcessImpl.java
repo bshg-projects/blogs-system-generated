@@ -10,10 +10,10 @@ import org.bshg.blogssystem.sprocess.notification.facade.CreateNotificationProce
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractCreateProcessImpl;
 
 public class CreateNotificationProcessImpl extends AbstractCreateProcessImpl<Notification, NotificationService> implements CreateNotificationProcess {
-    public CreateNotificationProcessImpl(NotificationService service, AdminService adminService, CostumerService costumerService) {
+    public CreateNotificationProcessImpl(NotificationService service, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
         this.costumerService = costumerService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -28,17 +28,17 @@ public class CreateNotificationProcessImpl extends AbstractCreateProcessImpl<Not
         configure(Notification.class);
     }
 
-    private final AdminService adminService;
-    private CreateAdminProcess createAdminProcess;
-
-    public void setCreateAdminProcess(CreateAdminProcess value) {
-        this.createAdminProcess = value;
-    }
-
     private final CostumerService costumerService;
     private CreateCostumerProcess createCostumerProcess;
 
     public void setCreateCostumerProcess(CreateCostumerProcess value) {
         this.createCostumerProcess = value;
+    }
+
+    private final AdminService adminService;
+    private CreateAdminProcess createAdminProcess;
+
+    public void setCreateAdminProcess(CreateAdminProcess value) {
+        this.createAdminProcess = value;
     }
 }

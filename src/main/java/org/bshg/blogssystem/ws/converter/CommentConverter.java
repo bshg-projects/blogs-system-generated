@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommentConverter extends AbstractConverter<Comment, CommentDto> {
     @Autowired
-    private AdminConverter adminConverter;
+    private PostConverter postConverter;
     @Autowired
     private LikeDislikeConverter likeDislikeConverter;
     @Autowired
     private CostumerConverter costumerConverter;
     @Autowired
-    private PostConverter postConverter;
+    private AdminConverter adminConverter;
     private boolean likesDislikes = true;
     private boolean admin = true;
     private boolean costumer = true;
@@ -28,10 +28,10 @@ public class CommentConverter extends AbstractConverter<Comment, CommentDto> {
 
     @Override
     protected void convertersConfig(boolean value) {
-        this.adminConverter.setComments(value);
+        this.postConverter.setComments(value);
         this.likeDislikeConverter.setComment(value);
         this.costumerConverter.setComments(value);
-        this.postConverter.setComments(value);
+        this.adminConverter.setComments(value);
     }
 
     @Override
@@ -76,12 +76,12 @@ public class CommentConverter extends AbstractConverter<Comment, CommentDto> {
         this.post = value;
     }
 
-    public void setAdminConverter(AdminConverter value) {
-        this.adminConverter = value;
+    public void setPostConverter(PostConverter value) {
+        this.postConverter = value;
     }
 
-    public AdminConverter getAdminConverter() {
-        return adminConverter;
+    public PostConverter getPostConverter() {
+        return postConverter;
     }
 
     public void setLikeDislikeConverter(LikeDislikeConverter value) {
@@ -100,11 +100,11 @@ public class CommentConverter extends AbstractConverter<Comment, CommentDto> {
         return costumerConverter;
     }
 
-    public void setPostConverter(PostConverter value) {
-        this.postConverter = value;
+    public void setAdminConverter(AdminConverter value) {
+        this.adminConverter = value;
     }
 
-    public PostConverter getPostConverter() {
-        return postConverter;
+    public AdminConverter getAdminConverter() {
+        return adminConverter;
     }
 }

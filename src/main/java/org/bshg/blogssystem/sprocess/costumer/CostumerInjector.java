@@ -33,43 +33,61 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class CostumerInjector {
     @Bean
-    public CreateCostumerProcess createCostumerProcess(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
-        var bean = new CreateCostumerProcessImpl(service, userProfileService, notificationService, commentService, likeDislikeService, postService);
+    public CreateCostumerProcess createCostumerProcess(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
+        var bean = new CreateCostumerProcessImpl(service, postService, likeDislikeService, userProfileService, notificationService, commentService);
+        bean.setCreatePostProcess(this.createPostProcess);
+        bean.setCreateLikeDislikeProcess(this.createLikeDislikeProcess);
         bean.setCreateUserProfileProcess(this.createUserProfileProcess);
         bean.setCreateNotificationProcess(this.createNotificationProcess);
         bean.setCreateCommentProcess(this.createCommentProcess);
-        bean.setCreateLikeDislikeProcess(this.createLikeDislikeProcess);
-        bean.setCreatePostProcess(this.createPostProcess);
         return bean;
     }
 
     @Bean
-    public UpdateCostumerProcess updateCostumerProcess(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
-        var bean = new UpdateCostumerProcessImpl(service, userProfileService, notificationService, commentService, likeDislikeService, postService);
+    public UpdateCostumerProcess updateCostumerProcess(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
+        var bean = new UpdateCostumerProcessImpl(service, postService, likeDislikeService, userProfileService, notificationService, commentService);
+        bean.setUpdatePostProcess(this.updatePostProcess);
+        bean.setDeletePostProcess(this.deletePostProcess);
+        bean.setUpdateLikeDislikeProcess(this.updateLikeDislikeProcess);
+        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
         bean.setUpdateUserProfileProcess(this.updateUserProfileProcess);
         bean.setDeleteUserProfileProcess(this.deleteUserProfileProcess);
         bean.setUpdateNotificationProcess(this.updateNotificationProcess);
         bean.setDeleteNotificationProcess(this.deleteNotificationProcess);
         bean.setUpdateCommentProcess(this.updateCommentProcess);
         bean.setDeleteCommentProcess(this.deleteCommentProcess);
-        bean.setUpdateLikeDislikeProcess(this.updateLikeDislikeProcess);
-        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
-        bean.setUpdatePostProcess(this.updatePostProcess);
-        bean.setDeletePostProcess(this.deletePostProcess);
         return bean;
     }
 
     @Bean
-    public DeleteCostumerProcess deleteCostumerProcess(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
-        var bean = new DeleteCostumerProcessImpl(service, userProfileService, notificationService, commentService, likeDislikeService, postService);
+    public DeleteCostumerProcess deleteCostumerProcess(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
+        var bean = new DeleteCostumerProcessImpl(service, postService, likeDislikeService, userProfileService, notificationService, commentService);
+        bean.setDeletePostProcess(this.deletePostProcess);
+        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
         bean.setDeleteUserProfileProcess(this.deleteUserProfileProcess);
         bean.setDeleteNotificationProcess(this.deleteNotificationProcess);
         bean.setDeleteCommentProcess(this.deleteCommentProcess);
-        bean.setDeleteLikeDislikeProcess(this.deleteLikeDislikeProcess);
-        bean.setDeletePostProcess(this.deletePostProcess);
         return bean;
     }
 
+    @Autowired
+    @Lazy
+    private CreatePostProcess createPostProcess;
+    @Autowired
+    @Lazy
+    private UpdatePostProcess updatePostProcess;
+    @Autowired
+    @Lazy
+    private DeletePostProcess deletePostProcess;
+    @Autowired
+    @Lazy
+    private CreateLikeDislikeProcess createLikeDislikeProcess;
+    @Autowired
+    @Lazy
+    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
+    @Autowired
+    @Lazy
+    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
     @Autowired
     @Lazy
     private CreateUserProfileProcess createUserProfileProcess;
@@ -97,22 +115,4 @@ public class CostumerInjector {
     @Autowired
     @Lazy
     private DeleteCommentProcess deleteCommentProcess;
-    @Autowired
-    @Lazy
-    private CreateLikeDislikeProcess createLikeDislikeProcess;
-    @Autowired
-    @Lazy
-    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
-    @Autowired
-    @Lazy
-    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
-    @Autowired
-    @Lazy
-    private CreatePostProcess createPostProcess;
-    @Autowired
-    @Lazy
-    private UpdatePostProcess updatePostProcess;
-    @Autowired
-    @Lazy
-    private DeletePostProcess deletePostProcess;
 }

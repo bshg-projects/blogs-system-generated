@@ -12,10 +12,10 @@ import org.bshg.blogssystem.sprocess.notification.facade.UpdateNotificationProce
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractUpdateProcessImpl;
 
 public class UpdateNotificationProcessImpl extends AbstractUpdateProcessImpl<Notification, NotificationService> implements UpdateNotificationProcess {
-    public UpdateNotificationProcessImpl(NotificationService service, AdminService adminService, CostumerService costumerService) {
+    public UpdateNotificationProcessImpl(NotificationService service, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
         this.costumerService = costumerService;
+        this.adminService = adminService;
     }
 
     public Notification run(Notification item) {
@@ -29,18 +29,6 @@ public class UpdateNotificationProcessImpl extends AbstractUpdateProcessImpl<Not
         this.configure(Notification.class);
     }
 
-    private final AdminService adminService;
-    private UpdateAdminProcess updateAdminProcess;
-    private DeleteAdminProcess deleteAdminProcess;
-
-    public void setUpdateAdminProcess(UpdateAdminProcess value) {
-        this.updateAdminProcess = value;
-    }
-
-    public void setDeleteAdminProcess(DeleteAdminProcess value) {
-        this.deleteAdminProcess = value;
-    }
-
     private final CostumerService costumerService;
     private UpdateCostumerProcess updateCostumerProcess;
     private DeleteCostumerProcess deleteCostumerProcess;
@@ -51,5 +39,17 @@ public class UpdateNotificationProcessImpl extends AbstractUpdateProcessImpl<Not
 
     public void setDeleteCostumerProcess(DeleteCostumerProcess value) {
         this.deleteCostumerProcess = value;
+    }
+
+    private final AdminService adminService;
+    private UpdateAdminProcess updateAdminProcess;
+    private DeleteAdminProcess deleteAdminProcess;
+
+    public void setUpdateAdminProcess(UpdateAdminProcess value) {
+        this.updateAdminProcess = value;
+    }
+
+    public void setDeleteAdminProcess(DeleteAdminProcess value) {
+        this.deleteAdminProcess = value;
     }
 }

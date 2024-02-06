@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationConverter extends AbstractConverter<Notification, NotificationDto> {
     @Autowired
-    private AdminConverter adminConverter;
-    @Autowired
     private CostumerConverter costumerConverter;
+    @Autowired
+    private AdminConverter adminConverter;
     private boolean admin = true;
     private boolean costumer = true;
 
@@ -22,8 +22,8 @@ public class NotificationConverter extends AbstractConverter<Notification, Notif
 
     @Override
     protected void convertersConfig(boolean value) {
-        this.adminConverter.setNotifications(value);
         this.costumerConverter.setNotifications(value);
+        this.adminConverter.setNotifications(value);
     }
 
     @Override
@@ -56,19 +56,19 @@ public class NotificationConverter extends AbstractConverter<Notification, Notif
         this.costumer = value;
     }
 
-    public void setAdminConverter(AdminConverter value) {
-        this.adminConverter = value;
-    }
-
-    public AdminConverter getAdminConverter() {
-        return adminConverter;
-    }
-
     public void setCostumerConverter(CostumerConverter value) {
         this.costumerConverter = value;
     }
 
     public CostumerConverter getCostumerConverter() {
         return costumerConverter;
+    }
+
+    public void setAdminConverter(AdminConverter value) {
+        this.adminConverter = value;
+    }
+
+    public AdminConverter getAdminConverter() {
+        return adminConverter;
     }
 }

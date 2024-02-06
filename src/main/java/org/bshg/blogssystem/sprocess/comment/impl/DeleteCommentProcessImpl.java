@@ -12,13 +12,15 @@ import org.bshg.blogssystem.sprocess.likedislike.facade.DeleteLikeDislikeProcess
 import org.bshg.blogssystem.sprocess.post.facade.DeletePostProcess;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractDeleteProcessImpl;
 
+import java.util.List;
+
 public class DeleteCommentProcessImpl extends AbstractDeleteProcessImpl<Comment, CommentService> implements DeleteCommentProcess {
-    public DeleteCommentProcessImpl(CommentService service, AdminService adminService, LikeDislikeService likeDislikeService, CostumerService costumerService, PostService postService) {
+    public DeleteCommentProcessImpl(CommentService service, PostService postService, LikeDislikeService likeDislikeService, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
+        this.postService = postService;
         this.likeDislikeService = likeDislikeService;
         this.costumerService = costumerService;
-        this.postService = postService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -29,27 +31,34 @@ public class DeleteCommentProcessImpl extends AbstractDeleteProcessImpl<Comment,
 
     public void deleteByAdmin(Admin admin) {
         if (admin != null && admin.getId() != null) {
+            List<Comment> found = this.service.findByAdminId(admin.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByAdminId(admin.getId());
         }
     }
 
     public void deleteByCostumer(Costumer costumer) {
         if (costumer != null && costumer.getId() != null) {
+            List<Comment> found = this.service.findByCostumerId(costumer.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByCostumerId(costumer.getId());
         }
     }
 
     public void deleteByPost(Post post) {
         if (post != null && post.getId() != null) {
+            List<Comment> found = this.service.findByPostId(post.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByPostId(post.getId());
         }
     }
 
     @Override
     public void deleteAssociatedList(Comment item) {
-        DeleteAdminProcess.deleteByAdmin(item);
-        DeleteCostumerProcess.deleteByCostumer(item);
-        DeletePostProcess.deleteByPost(item);
+        deleteLikeDislikeProcess.deleteByComment(item);
     }
 
     @Override
@@ -57,11 +66,11 @@ public class DeleteCommentProcessImpl extends AbstractDeleteProcessImpl<Comment,
         configure(Comment.class);
     }
 
-    private final AdminService adminService;
-    private DeleteAdminProcess deleteAdminProcess;
+    private final PostService postService;
+    private DeletePostProcess deletePostProcess;
 
-    public void setDeleteAdminProcess(DeleteAdminProcess value) {
-        this.deleteAdminProcess = value;
+    public void setDeletePostProcess(DeletePostProcess value) {
+        this.deletePostProcess = value;
     }
 
     private final LikeDislikeService likeDislikeService;
@@ -78,10 +87,10 @@ public class DeleteCommentProcessImpl extends AbstractDeleteProcessImpl<Comment,
         this.deleteCostumerProcess = value;
     }
 
-    private final PostService postService;
-    private DeletePostProcess deletePostProcess;
+    private final AdminService adminService;
+    private DeleteAdminProcess deleteAdminProcess;
 
-    public void setDeletePostProcess(DeletePostProcess value) {
-        this.deletePostProcess = value;
+    public void setDeleteAdminProcess(DeleteAdminProcess value) {
+        this.deleteAdminProcess = value;
     }
 }

@@ -12,15 +12,15 @@ public class AdminConverter extends AbstractConverter<Admin, AdminDto> {
     @Autowired
     private UserConverter userConverter;
     @Autowired
-    private UserProfileConverter userProfileConverter;
-    @Autowired
-    private NotificationConverter notificationConverter;
-    @Autowired
-    private CommentConverter commentConverter;
+    private PostConverter postConverter;
     @Autowired
     private LikeDislikeConverter likeDislikeConverter;
     @Autowired
-    private PostConverter postConverter;
+    private NotificationConverter notificationConverter;
+    @Autowired
+    private UserProfileConverter userProfileConverter;
+    @Autowired
+    private CommentConverter commentConverter;
     private boolean likeDislikes = true;
     private boolean notifications = true;
     private boolean profile = true;
@@ -34,10 +34,10 @@ public class AdminConverter extends AbstractConverter<Admin, AdminDto> {
 
     @Override
     protected void convertersConfig(boolean value) {
+        this.postConverter.setAdmin(value);
+        this.likeDislikeConverter.setAdmin(value);
         this.notificationConverter.setAdmin(value);
         this.commentConverter.setAdmin(value);
-        this.likeDislikeConverter.setAdmin(value);
-        this.postConverter.setAdmin(value);
     }
 
     @Override
@@ -90,28 +90,12 @@ public class AdminConverter extends AbstractConverter<Admin, AdminDto> {
         this.comments = value;
     }
 
-    public void setUserProfileConverter(UserProfileConverter value) {
-        this.userProfileConverter = value;
+    public void setPostConverter(PostConverter value) {
+        this.postConverter = value;
     }
 
-    public UserProfileConverter getUserProfileConverter() {
-        return userProfileConverter;
-    }
-
-    public void setNotificationConverter(NotificationConverter value) {
-        this.notificationConverter = value;
-    }
-
-    public NotificationConverter getNotificationConverter() {
-        return notificationConverter;
-    }
-
-    public void setCommentConverter(CommentConverter value) {
-        this.commentConverter = value;
-    }
-
-    public CommentConverter getCommentConverter() {
-        return commentConverter;
+    public PostConverter getPostConverter() {
+        return postConverter;
     }
 
     public void setLikeDislikeConverter(LikeDislikeConverter value) {
@@ -122,11 +106,27 @@ public class AdminConverter extends AbstractConverter<Admin, AdminDto> {
         return likeDislikeConverter;
     }
 
-    public void setPostConverter(PostConverter value) {
-        this.postConverter = value;
+    public void setNotificationConverter(NotificationConverter value) {
+        this.notificationConverter = value;
     }
 
-    public PostConverter getPostConverter() {
-        return postConverter;
+    public NotificationConverter getNotificationConverter() {
+        return notificationConverter;
+    }
+
+    public void setUserProfileConverter(UserProfileConverter value) {
+        this.userProfileConverter = value;
+    }
+
+    public UserProfileConverter getUserProfileConverter() {
+        return userProfileConverter;
+    }
+
+    public void setCommentConverter(CommentConverter value) {
+        this.commentConverter = value;
+    }
+
+    public CommentConverter getCommentConverter() {
+        return commentConverter;
     }
 }

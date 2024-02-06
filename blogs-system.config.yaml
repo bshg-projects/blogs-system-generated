@@ -48,7 +48,7 @@ packages:
           - comments|list-Comment
 
       - name: Costumer#user
-        table: admins
+        table: costumers
         authority: get(**) delete(ADMIN) update(ADMIN) create(ADMIN)
         fields:
           - firstname

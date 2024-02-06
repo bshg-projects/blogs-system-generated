@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostConverter extends AbstractConverter<Post, PostDto> {
     @Autowired
-    private CategoryConverter categoryConverter;
-    @Autowired
-    private AdminConverter adminConverter;
-    @Autowired
-    private CommentConverter commentConverter;
+    private TagConverter tagConverter;
     @Autowired
     private LikeDislikeConverter likeDislikeConverter;
     @Autowired
-    private TagConverter tagConverter;
+    private CategoryConverter categoryConverter;
     @Autowired
     private CostumerConverter costumerConverter;
+    @Autowired
+    private CommentConverter commentConverter;
+    @Autowired
+    private AdminConverter adminConverter;
     private boolean tags = true;
     private boolean comments = true;
     private boolean likesDislikes = true;
@@ -34,12 +34,12 @@ public class PostConverter extends AbstractConverter<Post, PostDto> {
 
     @Override
     protected void convertersConfig(boolean value) {
-        this.categoryConverter.setPosts(value);
-        this.adminConverter.setPosts(value);
-        this.commentConverter.setPost(value);
-        this.likeDislikeConverter.setPost(value);
         this.tagConverter.setPost(value);
+        this.likeDislikeConverter.setPost(value);
+        this.categoryConverter.setPosts(value);
         this.costumerConverter.setPosts(value);
+        this.commentConverter.setPost(value);
+        this.adminConverter.setPosts(value);
     }
 
     @Override
@@ -100,28 +100,12 @@ public class PostConverter extends AbstractConverter<Post, PostDto> {
         this.category = value;
     }
 
-    public void setCategoryConverter(CategoryConverter value) {
-        this.categoryConverter = value;
+    public void setTagConverter(TagConverter value) {
+        this.tagConverter = value;
     }
 
-    public CategoryConverter getCategoryConverter() {
-        return categoryConverter;
-    }
-
-    public void setAdminConverter(AdminConverter value) {
-        this.adminConverter = value;
-    }
-
-    public AdminConverter getAdminConverter() {
-        return adminConverter;
-    }
-
-    public void setCommentConverter(CommentConverter value) {
-        this.commentConverter = value;
-    }
-
-    public CommentConverter getCommentConverter() {
-        return commentConverter;
+    public TagConverter getTagConverter() {
+        return tagConverter;
     }
 
     public void setLikeDislikeConverter(LikeDislikeConverter value) {
@@ -132,12 +116,12 @@ public class PostConverter extends AbstractConverter<Post, PostDto> {
         return likeDislikeConverter;
     }
 
-    public void setTagConverter(TagConverter value) {
-        this.tagConverter = value;
+    public void setCategoryConverter(CategoryConverter value) {
+        this.categoryConverter = value;
     }
 
-    public TagConverter getTagConverter() {
-        return tagConverter;
+    public CategoryConverter getCategoryConverter() {
+        return categoryConverter;
     }
 
     public void setCostumerConverter(CostumerConverter value) {
@@ -146,5 +130,21 @@ public class PostConverter extends AbstractConverter<Post, PostDto> {
 
     public CostumerConverter getCostumerConverter() {
         return costumerConverter;
+    }
+
+    public void setCommentConverter(CommentConverter value) {
+        this.commentConverter = value;
+    }
+
+    public CommentConverter getCommentConverter() {
+        return commentConverter;
+    }
+
+    public void setAdminConverter(AdminConverter value) {
+        this.adminConverter = value;
+    }
+
+    public AdminConverter getAdminConverter() {
+        return adminConverter;
     }
 }

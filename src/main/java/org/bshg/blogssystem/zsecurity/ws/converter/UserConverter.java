@@ -69,8 +69,8 @@ public class UserConverter extends AbstractConverter<User, UserDto> {
         return item;
     }
 
-    public <T extends User, DTO extends UserDto> void convertToChildDto(T item, DTO dto) {
-        var userDto = toDto(item);
+    public <T extends User, DTO extends UserDto> void convertToChildDto(T childItem, DTO dto) {
+        var userDto = toDto(childItem);
         dto.setId(userDto.getId());
         dto.setCredentialsNonExpired(userDto.isCredentialsNonExpired());
         dto.setEnabled(userDto.isEnabled());

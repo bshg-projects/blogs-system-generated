@@ -17,13 +17,13 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractUpdateProcessImpl;
 
 public class UpdateCostumerProcessImpl extends AbstractUpdateProcessImpl<Costumer, CostumerService> implements UpdateCostumerProcess {
-    public UpdateCostumerProcessImpl(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
+    public UpdateCostumerProcessImpl(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
         super(service);
+        this.postService = postService;
+        this.likeDislikeService = likeDislikeService;
         this.userProfileService = userProfileService;
         this.notificationService = notificationService;
         this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
-        this.postService = postService;
     }
 
     public Costumer run(Costumer item) {
@@ -76,6 +76,30 @@ public class UpdateCostumerProcessImpl extends AbstractUpdateProcessImpl<Costume
         this.configure(Costumer.class);
     }
 
+    private final PostService postService;
+    private UpdatePostProcess updatePostProcess;
+    private DeletePostProcess deletePostProcess;
+
+    public void setUpdatePostProcess(UpdatePostProcess value) {
+        this.updatePostProcess = value;
+    }
+
+    public void setDeletePostProcess(DeletePostProcess value) {
+        this.deletePostProcess = value;
+    }
+
+    private final LikeDislikeService likeDislikeService;
+    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
+    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
+
+    public void setUpdateLikeDislikeProcess(UpdateLikeDislikeProcess value) {
+        this.updateLikeDislikeProcess = value;
+    }
+
+    public void setDeleteLikeDislikeProcess(DeleteLikeDislikeProcess value) {
+        this.deleteLikeDislikeProcess = value;
+    }
+
     private final UserProfileService userProfileService;
     private UpdateUserProfileProcess updateUserProfileProcess;
     private DeleteUserProfileProcess deleteUserProfileProcess;
@@ -110,29 +134,5 @@ public class UpdateCostumerProcessImpl extends AbstractUpdateProcessImpl<Costume
 
     public void setDeleteCommentProcess(DeleteCommentProcess value) {
         this.deleteCommentProcess = value;
-    }
-
-    private final LikeDislikeService likeDislikeService;
-    private UpdateLikeDislikeProcess updateLikeDislikeProcess;
-    private DeleteLikeDislikeProcess deleteLikeDislikeProcess;
-
-    public void setUpdateLikeDislikeProcess(UpdateLikeDislikeProcess value) {
-        this.updateLikeDislikeProcess = value;
-    }
-
-    public void setDeleteLikeDislikeProcess(DeleteLikeDislikeProcess value) {
-        this.deleteLikeDislikeProcess = value;
-    }
-
-    private final PostService postService;
-    private UpdatePostProcess updatePostProcess;
-    private DeletePostProcess deletePostProcess;
-
-    public void setUpdatePostProcess(UpdatePostProcess value) {
-        this.updatePostProcess = value;
-    }
-
-    public void setDeletePostProcess(DeletePostProcess value) {
-        this.deletePostProcess = value;
     }
 }

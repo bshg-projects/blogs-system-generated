@@ -12,13 +12,13 @@ import org.bshg.blogssystem.zutils.sprocess.impl.ProcessHelper;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractCreateProcessImpl;
 
 public class CreateCostumerProcessImpl extends AbstractCreateProcessImpl<Costumer, CostumerService> implements CreateCostumerProcess {
-    public CreateCostumerProcessImpl(CostumerService service, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService, LikeDislikeService likeDislikeService, PostService postService) {
+    public CreateCostumerProcessImpl(CostumerService service, PostService postService, LikeDislikeService likeDislikeService, UserProfileService userProfileService, NotificationService notificationService, CommentService commentService) {
         super(service);
+        this.postService = postService;
+        this.likeDislikeService = likeDislikeService;
         this.userProfileService = userProfileService;
         this.notificationService = notificationService;
         this.commentService = commentService;
-        this.likeDislikeService = likeDislikeService;
-        this.postService = postService;
     }
 
     @Override
@@ -42,6 +42,20 @@ public class CreateCostumerProcessImpl extends AbstractCreateProcessImpl<Costume
         configure(Costumer.class);
     }
 
+    private final PostService postService;
+    private CreatePostProcess createPostProcess;
+
+    public void setCreatePostProcess(CreatePostProcess value) {
+        this.createPostProcess = value;
+    }
+
+    private final LikeDislikeService likeDislikeService;
+    private CreateLikeDislikeProcess createLikeDislikeProcess;
+
+    public void setCreateLikeDislikeProcess(CreateLikeDislikeProcess value) {
+        this.createLikeDislikeProcess = value;
+    }
+
     private final UserProfileService userProfileService;
     private CreateUserProfileProcess createUserProfileProcess;
 
@@ -61,19 +75,5 @@ public class CreateCostumerProcessImpl extends AbstractCreateProcessImpl<Costume
 
     public void setCreateCommentProcess(CreateCommentProcess value) {
         this.createCommentProcess = value;
-    }
-
-    private final LikeDislikeService likeDislikeService;
-    private CreateLikeDislikeProcess createLikeDislikeProcess;
-
-    public void setCreateLikeDislikeProcess(CreateLikeDislikeProcess value) {
-        this.createLikeDislikeProcess = value;
-    }
-
-    private final PostService postService;
-    private CreatePostProcess createPostProcess;
-
-    public void setCreatePostProcess(CreatePostProcess value) {
-        this.createPostProcess = value;
     }
 }

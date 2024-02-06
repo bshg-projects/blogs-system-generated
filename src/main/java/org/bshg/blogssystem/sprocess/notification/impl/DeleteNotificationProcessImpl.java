@@ -11,11 +11,13 @@ import org.bshg.blogssystem.sprocess.costumer.facade.DeleteCostumerProcess;
 import org.bshg.blogssystem.sprocess.notification.facade.DeleteNotificationProcess;
 import org.bshg.blogssystem.zutils.sprocess.impl.processes.AbstractDeleteProcessImpl;
 
+import java.util.List;
+
 public class DeleteNotificationProcessImpl extends AbstractDeleteProcessImpl<Notification, NotificationService> implements DeleteNotificationProcess {
-    public DeleteNotificationProcessImpl(NotificationService service, AdminService adminService, CostumerService costumerService) {
+    public DeleteNotificationProcessImpl(NotificationService service, CostumerService costumerService, AdminService adminService) {
         super(service);
-        this.adminService = adminService;
         this.costumerService = costumerService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -26,12 +28,18 @@ public class DeleteNotificationProcessImpl extends AbstractDeleteProcessImpl<Not
 
     public void deleteByAdmin(Admin admin) {
         if (admin != null && admin.getId() != null) {
+            List<Notification> found = this.service.findByAdminId(admin.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByAdminId(admin.getId());
         }
     }
 
     public void deleteByCostumer(Costumer costumer) {
         if (costumer != null && costumer.getId() != null) {
+            List<Notification> found = this.service.findByCostumerId(costumer.getId());
+            if (found == null) return;
+            found.forEach(this::deleteAssociatedList);
             service.deleteByCostumerId(costumer.getId());
         }
     }
@@ -41,17 +49,17 @@ public class DeleteNotificationProcessImpl extends AbstractDeleteProcessImpl<Not
         configure(Notification.class);
     }
 
-    private final AdminService adminService;
-    private DeleteAdminProcess deleteAdminProcess;
-
-    public void setDeleteAdminProcess(DeleteAdminProcess value) {
-        this.deleteAdminProcess = value;
-    }
-
     private final CostumerService costumerService;
     private DeleteCostumerProcess deleteCostumerProcess;
 
     public void setDeleteCostumerProcess(DeleteCostumerProcess value) {
         this.deleteCostumerProcess = value;
+    }
+
+    private final AdminService adminService;
+    private DeleteAdminProcess deleteAdminProcess;
+
+    public void setDeleteAdminProcess(DeleteAdminProcess value) {
+        this.deleteAdminProcess = value;
     }
 }

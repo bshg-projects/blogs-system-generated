@@ -21,6 +21,7 @@ public class DeleteCategoryProcessImpl extends AbstractDeleteProcessImpl<Categor
 
     @Override
     public void deleteAssociatedList(Category item) {
+        deletePostProcess.deleteByCategory(item);
     }
 
     @Override
